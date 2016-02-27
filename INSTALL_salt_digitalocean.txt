@@ -1,0 +1,12 @@
+### Before we start, follow the steps to setup and test and Salt Master.
+
+Common for the environment:
+    Before starting to create server in digital ocean. create a common 
+    minion configuration file for all upcomming servers in digital ocean.
+    
+    $ sudo vi /etc/salt/cloud
+    
+    add:
+        minion:
+            master: <master_server_ip>
+            

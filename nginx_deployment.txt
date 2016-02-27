@@ -1,0 +1,11 @@
+follow the steps:
+
+Master:
+    $ sudo mkdir /srv/salt/nginx
+    
+    file extension is .sls and init.sls is the main configuration file in the directory.
+    
+    $ sudo vi /srv/salt/nginx/init.sls
+    
+    
+    

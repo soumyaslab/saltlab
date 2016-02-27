@@ -85,4 +85,12 @@ Check for configuration:
     
     NOTE: position of the master will be unter, Accepted Keys. :)
     
+    #step: 4
+    Ping test
     
+    $ sudo salt '*' test.ping
+    
+    output:
+    
+        master:
+            True
