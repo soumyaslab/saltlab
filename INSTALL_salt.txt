@@ -1,0 +1,88 @@
+Install Master: [NOTE: this steps are for v2015.8.0]
+
+    $ cd <to your prefered directory>
+    $ curl -L https://bootstrap.saltstack.com -o install_salt.sh
+    $ sudo sh install_salt.sh -P -M git v2015.8.0
+    
+    If internet connection is proper and there will be no disturbances.
+    Then the Salt mastr , minion and some salt master related tools will be 
+    installed in your system.
+    
+Configure Master daemon: 
+    for pur dev infrastructure we will do the following chnages
+    
+    file: /etc/salt/master
+    changes:
+        - search for "file_recv: False" and change it to "file_recv: True"
+        - search for "file_roots" and uncomment the following lines
+                 file_roots:
+                    base:
+                        - /srv/salt
+        - search for "pillar_roots" and uncomment the following lines
+                 pillar_roots:
+                    base:
+                        - /srv/pillar
+    
+    NOTE: for working the above configuration properly, run the bellow command
+    which will create the directories.
+    
+        $ sudo mkdir -p /srv/{salt,pillar}
+
+Configure Minion daemon: 
+    for pur dev infrastructure we will do the following chnages
+    
+    file: /etc/salt/minion
+    chnages:
+        - though both master and minion daemons are running in the same server,
+          search for "master: " and change it to "master: 127.0.0.1"
+        
+Check for configuration:
+    Now the salt Master and Minion are configured in the same server, 
+    it time to test by restarting the services.
+    
+    $ sudo restart salt-master
+    $ sudo restart salt-minion
+    
+    #Step: 1
+    By this process the salt master should capter the minion's key for secure 
+    communication. to check this, run the following command to show the list 
+    of accepted keys.
+    
+    $ sudo salt-key  --list all
+    
+    #Step: 2
+    If everything works fine in step 1, the following output will display:
+        student@master:~/v2015.8.0$ sudo salt-key  --list all
+            Accepted Keys:
+            Denied Keys:
+            Unaccepted Keys:
+            master
+            Rejected Keys:
+        
+        NOTE 1: though the minion is running the master and the server hostname 
+        is master, it is display as master in "unaccepted keys" list. which says,
+        configuration is fine.
+        
+        NOTE 2: here in the display "master" is not a generic name, its "host name" 
+        of the machine. in your implementation, it will the different based on the 
+        server hostname, that you are using.
+    
+    To add the key, run the following command in master.
+    
+    $ sudo salt-key -a master
+        NOTE: select 'Y' once prompted in the screen
+    
+    #step: 3 
+    after successful execution of above command, run the following command to check 
+    the minion key status
+    
+    $ sudo salt-key --list all
+    Accepted Keys:
+    master
+    Denied Keys:
+    Unaccepted Keys:
+    Rejected Keys:
+    
+    NOTE: position of the master will be unter, Accepted Keys. :)
+    
+    
