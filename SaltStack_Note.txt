@@ -1,0 +1,26 @@
+About SaltStack:
+----------------
+SaltStack is a remote execution tool and configuration management system.
+
+- SaltStack uses client server model to configure servers with given policy
+
+There are two kind machines:
+    - Master : Mater is the machine which controls infrastructure and dictate/apply policy
+                A demon called "salt-master"
+    - Minion : any machine whikch is controlled by "Master" is called as "Minion". A demon called "salt-minion" 
+
+---------------------------
+How Salt works:
+---------------
+- Salt Master and Minion communicate useing ZeroMQ messaging Library. This provides extremely high performance network communication between parties, allowing Salt to send messages and data at rapid speeds. Because ZeroMQ is a library and not an independent service, this functionality is available in the salt-master and salt-minion daemons natively.
+
+- When using ZeroMQ, Salt maintains a public key system for authenticating masters and minions. Upon first boot, a minion generates a key pair and sends its credentials to the master server it is configured to contact. The master can then accept this key after verifying the identity of the minion. The two parties can then communicate quickly and securely using ZeroMQ encrypted with the keys.
+
+- Use when required: [If for some reason it is impossible to install the salt-minion daemon on a node, Salt can also issue commands over SSH. This transport option is provided for convenience, but it degrades performance quite considerably and can lead to complications with other Salt commands in some instances. It is highly recommended that you use the salt-minion daemon where possible for performance, security, and simplicity.]
+
+--------------------------
+Salt terminology:
+-----------------
+- "Execution Modules" are remote execution capabilities
+- Related "Functions" combine together makes the "Execution Modules"
+- 
